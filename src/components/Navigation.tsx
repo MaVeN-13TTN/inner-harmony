@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ThemeToggle } from '@/app/components/theme/ThemeToggle'
+import { ThemeToggle } from '@/components/theme/ThemeToggle'
 
 const navItems = [
   { name: 'Benefits', id: 'benefits' },

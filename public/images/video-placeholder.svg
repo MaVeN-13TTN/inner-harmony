@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#1E293B"/>
+  <path d="M640 360m-120 0a120 120 0 1 0 240 0a120 120 0 1 0 -240 0" fill="#334155" stroke="#475569" stroke-width="4"/>
+  <path d="M605 300L695 360L605 420V300Z" fill="#94A3B8" stroke="#94A3B8" stroke-width="4" stroke-linejoin="round"/>
+  <text x="640" y="560" text-anchor="middle" fill="#94A3B8" font-family="system-ui" font-size="24">Loading thumbnail...</text>
+</svg>

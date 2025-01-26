@@ -4,13 +4,12 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Play } from 'lucide-react'
-
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
+import Image from 'next/image'
 
 // Helper function to get YouTube video ID
 function getYouTubeVideoId(url: string) {
-  const match = url.match(/[?&]v=([^&]+)/)
-  return match ? match[1] : url.split('/').pop()
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
+  return match ? match[1] : '';
 }
 
 const videos = [
@@ -36,20 +35,6 @@ const videos = [
     category: "Relaxation"
   },
   {
-    title: "10 Minute Morning Meditation - High Frequency Positive Energy",
-    description: "A short session to energize your morning.",
-    url: "https://www.youtube.com/watch?v=V5GS5Jc4rYg",
-    duration: "10 min",
-    category: "Morning"
-  },
-  {
-    title: "10 Minute Morning Meditation - You'll Have the Most Incredible Day",
-    description: "A meditation to set a positive tone for the day ahead.",
-    url: "https://www.youtube.com/watch?v=Z2PjG_GQpPc",
-    duration: "10 min",
-    category: "Morning"
-  },
-  {
     title: "5 MINUTE Guided Meditation for Anxiety",
     description: "A brief session focused on alleviating anxiety.",
     url: "https://www.youtube.com/watch?v=MIr3RsUWrdo",
@@ -57,32 +42,11 @@ const videos = [
     category: "Anxiety Relief"
   },
   {
-    title: "Healing Energy Sleep Meditation",
-    description: "A meditation designed to promote healing and restful sleep.",
-    url: "https://www.youtube.com/watch?v=Zz2wIh0M6Gc",
-    duration: "30 min",
-    category: "Sleep"
-  },
-  {
-    title: "True Transformation through Letting Go",
-    description: "A session focused on releasing negative emotions.",
-    url: "https://www.youtube.com/watch?v=K4gkA3DO0AY",
-    duration: "20 min",
-    category: "Emotional Healing"
-  },
-  {
     title: "How Long Can You Focus?",
     description: "A practice to enhance concentration and focus.",
     url: "https://www.youtube.com/watch?v=8v45WSuAeYI",
     duration: "15 min",
     category: "Focus"
-  },
-  {
-    title: "Daily Calm | 10 Minute Mindfulness Meditation",
-    description: "A daily meditation to cultivate mindfulness.",
-    url: "https://www.youtube.com/watch?v=ZToicYcHIOU",
-    duration: "10 min",
-    category: "Mindfulness"
   },
   {
     title: "5-Minute Meditation You Can Do Anywhere",
@@ -106,27 +70,6 @@ const videos = [
     category: "Anxiety Relief"
   },
   {
-    title: "Guided Meditation for Sleep... Floating Amongst the Stars",
-    description: "A meditation designed to help you drift into sleep with a sense of calm and wonder.",
-    url: "https://www.youtube.com/watch?v=qzQIL3npB8A",
-    category: "Sleep",
-    duration: "45 min"
-  },
-  {
-    title: "20 Minute Guided Meditation for Reducing Stress and Anxiety",
-    description: "A relaxing meditation session to help reduce stress and restore balance.",
-    url: "https://www.youtube.com/watch?v=3nwwKbM_vJc",
-    category: "Stress Relief",
-    duration: "20 min"
-  },
-  {
-    title: "30-Minute Guided Meditation to Reconnect with Yourself",
-    description: "A session for fostering inner connection and peace.",
-    url: "https://www.youtube.com/watch?v=xh3BfGQNWhU",
-    category: "Self-Discovery",
-    duration: "30 min"
-  },
-  {
     title: "Self-Love Meditation - Feel the Love Within",
     description: "A guided meditation to enhance self-compassion and love.",
     url: "https://www.youtube.com/watch?v=itZMM5gCboo",
@@ -139,31 +82,24 @@ const videos = [
     url: "https://www.youtube.com/watch?v=W19PdslW7iw",
     category: "Healing",
     duration: "20 min"
-  },
-  {
-    title: "Grounding Meditation - Stay Present and Balanced",
-    description: "A session designed to help you feel grounded and focused.",
-    url: "https://www.youtube.com/watch?v=8lu0CHeZrm8",
-    category: "Grounding",
-    duration: "15 min"
-  },
-  {
-    title: "Deep Breathing Meditation for Beginners",
-    description: "A perfect start for beginners looking to incorporate deep breathing into their practice.",
-    url: "https://www.youtube.com/watch?v=SEfs5TJZ6Nk",
-    category: "Beginners",
-    duration: "10 min"
   }
 ]
 
 const categories = Array.from(new Set(videos.map(video => video.category)))
 
+const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
+
 export function Videos() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [failedThumbnails, setFailedThumbnails] = useState<Set<string>>(new Set())
 
   const handleVideoClick = (videoUrl: string) => {
     setSelectedVideo(videoUrl === selectedVideo ? null : videoUrl)
+  }
+
+  const handleThumbnailError = (videoId: string) => {
+    setFailedThumbnails(prev => new Set(prev).add(videoId))
   }
 
   const filteredVideos = selectedCategory === null 
@@ -203,7 +139,7 @@ export function Videos() {
         </div>
 
         <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-          {filteredVideos.map((video) => (
+          {filteredVideos.map((video, index) => (
             <div
               key={video.url}
               className="relative overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900 shadow-lg transition-all duration-300 hover:shadow-xl"
@@ -223,11 +159,21 @@ export function Videos() {
                   onClick={() => handleVideoClick(video.url)}
                   className="group aspect-[16/9] block w-full relative overflow-hidden"
                 >
-                  <img
-                    src={`https://img.youtube.com/vi/${getYouTubeVideoId(video.url)}/maxresdefault.jpg`}
-                    alt={video.title}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={
+                        failedThumbnails.has(getYouTubeVideoId(video.url))
+                          ? '/images/video-placeholder.svg'
+                          : `https://img.youtube.com/vi/${getYouTubeVideoId(video.url)}/hqdefault.jpg`
+                      }
+                      alt={video.title}
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      fill
+                      sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      priority={index < 3}
+                      onError={() => handleThumbnailError(getYouTubeVideoId(video.url))}
+                    />
+                  </div>
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity group-hover:bg-black/50">
                     <div className="rounded-full bg-white/10 p-4 backdrop-blur-sm transition-transform group-hover:scale-110">
                       <Play className="h-12 w-12 text-white" />
