@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inner Harmony
+
+A modern, responsive meditation and mindfulness web application built with Next.js 13, React, and TypeScript. Inner Harmony provides a serene digital space for users to explore guided meditations, mindfulness resources, and begin their journey to inner peace.
+
+![Inner Harmony](public/screenshot.png)
+
+## Features
+
+- **Modern UI/UX**
+  - Beautiful, responsive design
+  - Smooth animations with Framer Motion
+  - Dark/Light theme support
+  - Gradient backgrounds and blur effects
+
+- **Meditation Content**
+  - Curated guided meditation videos
+  - Category-based filtering
+  - Interactive video player
+  - Duration and category indicators
+
+- **Resources Section**
+  - Curated articles and blog posts
+  - Shuffle functionality
+  - Category tagging
+  - External resource links
+
+- **Benefits Section**
+  - Animated benefits cards
+  - Clear value propositions
+  - Icon illustrations
+
+- **Design Features**
+  - Custom animations
+  - Responsive typography
+  - Optimized images
+  - Accessible components
+
+## Tech Stack
+
+- **Framework**: Next.js 13 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **Animations**: Framer Motion
+- **Icons**: Lucide Icons
+- **Video Player**: React Player
+- **Font**: Inter & Playfair Display (Google Fonts)
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/inner-harmony.git
+   cd inner-harmony
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+4. **Open [http://localhost:3000](http://localhost:3000) with your browser**
+
+## Project Structure
+
+```
+inner-harmony/
+├── src/
+│   ├── app/                 # Next.js app router
+│   ├── components/          # React components
+│   │   ├── sections/        # Page sections
+│   │   ├── theme/          # Theme components
+│   │   └── ui/             # UI components
+│   └── styles/             # Global styles
+├── public/                 # Static assets
+└── package.json           # Project dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-To learn more about Next.js, take a look at the following resources:
+## Acknowledgments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Lucide Icons](https://lucide.dev/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for peace of mind
