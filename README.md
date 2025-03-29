@@ -2,7 +2,7 @@
 
 A modern, responsive meditation and mindfulness web application built with Next.js 13, React, and TypeScript. Inner Harmony provides a serene digital space for users to explore guided meditations, mindfulness resources, and begin their journey to inner peace.
 
-![Inner Harmony](public/screenshot.png)
+![Inner Harmony](https://meyvn-portfolio.s3.us-east-1.amazonaws.com/inner-harmony-screenshot.png)
 
 ## Features
 
